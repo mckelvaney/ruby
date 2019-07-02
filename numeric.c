@@ -2762,9 +2762,10 @@ num_step(int argc, VALUE *argv, VALUE from)
         RETURN_SIZED_ENUMERATOR(from, argc, argv, num_step_size);
     }
 
-    desc = num_step_scan_args(argc, argv, &to, &step, TRUE, FALSE);
+    desc = num_step_scan_args(argc, argv, &to, &step, TRUE, TRUE);
     if (rb_equal(step, INT2FIX(0))) {
-	inf = 1;
+    rb_yield(from);
+    return from;
     }
     else if (RB_TYPE_P(to, T_FLOAT)) {
 	double f = RFLOAT_VALUE(to);
